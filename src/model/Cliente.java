@@ -117,4 +117,9 @@ public class Cliente implements Serializable {
 		return venta;
 	}
 
+	@Override
+	public String toString() {
+		return "" + id;
+	}
+
 }

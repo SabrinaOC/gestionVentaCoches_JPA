@@ -1,11 +1,6 @@
 package model.controllers;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -13,7 +8,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import model.Coche;
 import model.Fabricante;
 
 public class ControladorFabricante {
@@ -150,6 +144,9 @@ public class ControladorFabricante {
 	public void borrar(Fabricante f) {
 		EntityManager em = factory.createEntityManager();
 		em.getTransaction().begin();
+		if (!em.contains(f)) {
+		    f = em.merge(f);
+		}
 		em.remove(f);
 		em.getTransaction().commit();
 		em.close();

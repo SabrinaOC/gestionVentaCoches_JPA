@@ -1,5 +1,6 @@
 package model.controllers;
 
+
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -7,22 +8,22 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import model.Coche;
-import model.Concesionario;
+import model.Cliente;
 
-public class ControladorCoche {
 
-	private static ControladorCoche instance = null;
+public class ControladorCliente {
 
+	private static ControladorCliente instance = null;
+	
 	private EntityManagerFactory factory = Persistence.createEntityManagerFactory("TutorialJavaCochesJPA"); 
 	
 	/**
 	 * 
 	 * @return
 	 */
-	public static ControladorCoche getInstance () {
+	public static ControladorCliente getInstance () {
 		if (instance == null) {
-			instance = new ControladorCoche();
+			instance = new ControladorCliente();
 		}
 		return instance;
 	}
@@ -30,7 +31,16 @@ public class ControladorCoche {
 	/**
 	 * 
 	 */
-	public ControladorCoche() {
+	public ControladorCliente() {
+	}
+	
+	
+	public Cliente find(int id) {
+		Cliente c = null;
+		EntityManager em = factory.createEntityManager();
+		c = (Cliente) em.find(Cliente.class, id);
+		em.close();
+		return c;
 	}
 	
 	
@@ -38,12 +48,12 @@ public class ControladorCoche {
 	 * 
 	 * @return
 	 */
-	public Coche findPrimero () {
-		Coche c = null;
+	public Cliente findPrimero () {
+		Cliente c = null;
 		
 		EntityManager em = factory.createEntityManager();
-		Query q = em.createNativeQuery("select * from tutorialjavacoches.coche order by id limit 1", Coche.class);
-		c = (Coche) q.getSingleResult();
+		Query q = em.createNativeQuery("select * from tutorialjavacoches.cliente order by id limit 1", Cliente.class);
+		c = (Cliente) q.getSingleResult();
 		em.close();
 		
 		return c;
@@ -54,12 +64,12 @@ public class ControladorCoche {
 	 * 
 	 * @return
 	 */
-	public Coche findUltimo () {
-		Coche c = null;
+	public Cliente findUltimo () {
+		Cliente c = null;
 		
 		EntityManager em = factory.createEntityManager();
-		Query q = em.createNativeQuery("select * from tutorialjavacoches.coche order by id desc limit 1", Coche.class);
-		c = (Coche) q.getSingleResult();
+		Query q = em.createNativeQuery("select * from tutorialjavacoches.cliente order by id desc limit 1", Cliente.class);
+		c = (Cliente) q.getSingleResult();
 		em.close();
 		
 		return c;
@@ -70,13 +80,13 @@ public class ControladorCoche {
 	 * 
 	 * @return
 	 */
-	public Coche findSiguiente (int idActual) {
-		Coche c = null;
+	public Cliente findSiguiente (int idActual) {
+		Cliente c = null;
 		
 		EntityManager em = factory.createEntityManager();
-		Query q = em.createNativeQuery("select * from tutorialjavacoches.coche where id > ? order by id limit 1", Coche.class);
+		Query q = em.createNativeQuery("select * from tutorialjavacoches.cliente where id > ? order by id limit 1", Cliente.class);
 		q.setParameter(1, idActual);
-		c = (Coche) q.getSingleResult();
+		c = (Cliente) q.getSingleResult();
 		em.close();
 		
 		return c;
@@ -87,13 +97,13 @@ public class ControladorCoche {
 	 * 
 	 * @return
 	 */
-	public Coche findAnterior (int idActual) {
-		Coche c = null;
+	public Cliente findAnterior (int idActual) {
+		Cliente c = null;
 		
 		EntityManager em = factory.createEntityManager();
-		Query q = em.createNativeQuery("select * from tutorialjavacoches.coche where id < ? order by id desc limit 1", Coche.class);
+		Query q = em.createNativeQuery("select * from tutorialjavacoches.cliente where id < ? order by id desc limit 1", Cliente.class);
 		q.setParameter(1, idActual);
-		c = (Coche) q.getSingleResult();
+		c = (Cliente) q.getSingleResult();
 		em.close();
 		
 		return c;		
@@ -105,7 +115,7 @@ public class ControladorCoche {
 	 * 
 	 * @return
 	 */
-	public boolean guardar (Coche c) {
+	public boolean guardar (Cliente c) {
 		try {
 			EntityManager em = factory.createEntityManager();
 			em.getTransaction().begin();
@@ -125,13 +135,14 @@ public class ControladorCoche {
 		}
 	}
 
+
 	
 	/**
 	 * 
 	 * @param id
 	 * @return
 	 */
-	public void borrar(Coche c) {
+	public void borrar(Cliente c) {
 		EntityManager em = factory.createEntityManager();
 		em.getTransaction().begin();
 		if (!em.contains(c)) {
@@ -142,19 +153,20 @@ public class ControladorCoche {
 		em.close();
 	}
 
+	
 	/**
-	 * Método para meter todos los coches en una lista y usarlo en el jcb
+	 * 
 	 * @return
 	 */
-	public List<Coche> findAll () {
+	public List<Cliente> findAll () {
 		EntityManager em = factory.createEntityManager();
 		
-		Query q = em.createNativeQuery("SELECT * FROM coche", Coche.class);
+		Query q = em.createNativeQuery("SELECT * FROM cliente", Cliente.class);
 		
-		List<Coche> list = (List<Coche>) q.getResultList();
+		List<Cliente> list = (List<Cliente>) q.getResultList();
 		em.close();
 		return list;
-	}	
+	}
 	
 
 }

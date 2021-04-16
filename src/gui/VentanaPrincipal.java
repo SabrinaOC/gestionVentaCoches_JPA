@@ -1,11 +1,8 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.GraphicsConfiguration;
-import java.awt.HeadlessException;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 public class VentanaPrincipal extends JFrame {
@@ -47,6 +44,9 @@ public class VentanaPrincipal extends JFrame {
 		
 		jTabbedPane.add("Fabricantes", new PanelFabricantes());
 		jTabbedPane.add("Coches", new PanelCoches());
+		jTabbedPane.add("Clientes", new PanelCliente());
+		jTabbedPane.add("Concesionarios", new PanelConcesionario());
+		jTabbedPane.add("Ventas", new PanelVenta());
 		
 		return jTabbedPane;
 	}
